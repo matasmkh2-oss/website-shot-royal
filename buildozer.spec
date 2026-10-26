@@ -6,20 +6,20 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
 version = 5.3
 
-requirements = python3,kivy,arabic-reshaper,python-bidi
+# تثبيت إصدار بايثون و Kivy المستقرين للأندرويد (بدون python-bidi لأن الكود يدعم العربية تلقائياً)
+requirements = python3==3.11.6,hostpython3==3.11.6,kivy==2.3.0,arabic-reshaper,openssl,urllib3,certifi
 
 orientation = portrait
 fullscreen = 0
 android.permissions = INTERNET,WRITE_EXTERNAL_STORAGE,READ_EXTERNAL_STORAGE
 
-# ضبط الإصدارات المتوافقة تلقائياً
-android.api = 31
+android.api = 33
 android.minapi = 21
-android.sdk = 31
 android.ndk = 25b
 android.archs = arm64-v8a
 android.accept_sdk_license = True
+p4a.branch = master
 
 [buildozer]
-log_level = 2
+log_level = 1
 warn_on_root = 1
