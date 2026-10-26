@@ -2,8 +2,8 @@
 title = Website Shot Royal
 package.name = websiteshotroyal
 package.domain = org.royal
+source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
-source.include_patterns = images/*.png,images/*.jpg
 version = 5.3
 
 requirements = python3,kivy,arabic-reshaper,python-bidi
