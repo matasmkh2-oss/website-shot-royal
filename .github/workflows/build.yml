@@ -10,24 +10,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      - name: Cache Buildozer directories
+        uses: actions/cache@v4
+        with:
+          path: |
+            .buildozer
+            ~/.buildozer
+          key: buildozer-${{ hashFiles('buildozer.spec') }}
+
+      - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev automake libltdl-dev ccache
-          pip install --upgrade pip "setuptools<70.0.0" wheel
-          pip install buildozer cython==0.29.36
+          sudo apt-get install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev automake libltdl-dev ccache libsqlite3-dev
 
-      - name: Build with Buildozer
+      - name: Install Python Build Tools
         run: |
-          yes | buildozer android debug
+          pip install --upgrade pip "setuptools<70.0.0" wheel
+          pip install "cython<3.0.0" buildozer
+
+      - name: Build APK with Buildozer
+        run: |
+          buildozer android debug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: package
+          name: WebsiteShot-APK
           path: bin/*.apk
